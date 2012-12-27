@@ -11,6 +11,7 @@
 /*  Description            :  Test all of the classes and functions      */
 /*************************************************************************/
 
+#include"stdio.h"
 #include<iostream>
 #include<ctime>
 #include<cstdlib>
@@ -159,19 +160,35 @@ void TestVector()
     lt.printall();
 }
 
-void TestKmeans()
+void TestKmeans(int n, int less, int more)
 {
+    const char *infile[] = {"../dm-xp-2/dataset/dataset-1",
+        "../dm-xp-2/dataset/dataset-2","../dm-xp-2/dataset/dataset-3",
+        "../dm-xp-2/dataset/dataset-4","../dm-xp-2/dataset/dataset-5"};
+    const char *outfile[] = {"../dm-xp-2/dataset/myout-1",
+        "../dm-xp-2/dataset/myout-2","../dm-xp-2/dataset/myout-3",
+        "../dm-xp-2/dataset/myout-4","../dm-xp-2/dataset/myout-5"};
+    const int clusters[] = {-1, 4, 4, 3, 2, 11};
     list<Vector> data;
-    read_data("../dm-xp-2/dataset/dataset-4", data);
-    Kmeans km(data, 2);
-    km.clusterize();
-    km.write_data("../dm-xp-2/dataset/myout-4");
+    read_data(infile[n], data);
+    for (int k=clusters[n]-less; k<clusters[n]+more; k++)
+    {
+        Kmeans km(data, k);
+        km.clusterize();
+        //cout << k << " : " << km.DunnIndex() << endl;
+        //printf("%2d : %f\n", k, km.DunnIndex());
+        printf("%2d : %f\n", k, km.DaviesBouldinIndex());
+    }
+    //km.write_data(outfile[n]);
 }
 
-int main()
+int main(int argc, char *argv[])
 {
     //TestKahanSum();
     //TestMedian();
     //TestVector();
-    TestKmeans();
+    if (argc != 4)
+        cout << "argument is not enough" << endl;
+    else
+        TestKmeans(atoi(argv[1]), atoi(argv[2]), atoi(argv[3]));
 }

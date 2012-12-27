@@ -5,7 +5,7 @@
 class Kmeans
 {
     /* origin points */
-    list<Vector> &points;
+    const list<Vector> &points;
     /* number of clusters */
     int k;
     /* the center of each cluster */
@@ -30,6 +30,10 @@ public:
 
     /* clusterize the points, return the number of iterations */
     int clusterize();
+    /* compute the Dunn index of the clusters */
+    double DunnIndex();
+    /* compute the Davies-Bouldin index of the clusters */
+    double DaviesBouldinIndex();
 };
 
 #endif
