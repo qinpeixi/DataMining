@@ -12,6 +12,10 @@ protected:
     size_t n;
 public:
     Vector(size_t n);
+    Vector(const Vector &inVector);
+    Vector& operator = (const Vector &v);
+    bool operator == (const Vector &v);
+    bool operator != (const Vector &v);
     void fill(double value);
     double get(int i) const;
     void set(int i, double value);
@@ -30,7 +34,7 @@ public:
 };
 
 void write_data(const char *fname, list<Vector>& data);
-void read_data(const char *fname, list<Vector>& data, size_t size);
+void read_data(const char *fname, list<Vector>& data);
 Vector vector_mean(list<Vector>& data);
 Vector vector_median(list<Vector>& data);
 

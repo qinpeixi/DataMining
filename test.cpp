@@ -21,6 +21,7 @@
 #include"KahanSum.hpp"
 #include"Median.hpp"
 #include"Vector.hpp"
+#include"Kmeans.hpp"
 using namespace std;
 
 void TestKahanSum()
@@ -128,7 +129,7 @@ void TestVector()
     write_data("data.txt", l);
 
     l.clear();
-    read_data("data.txt", l, size);
+    read_data("data.txt", l);
     cout << "Read data:" << l.size() << endl;
     VectorTest lt(size);
     for (list<Vector>::iterator i = l.begin();
@@ -152,11 +153,25 @@ void TestVector()
     d = vector_median(l);
     lt = d;
     lt.printall();
+    Vector e(c);
+    lt = e;
+    cout << "E is ";
+    lt.printall();
+}
+
+void TestKmeans()
+{
+    list<Vector> data;
+    read_data("../dm-xp-2/dataset/dataset-4", data);
+    Kmeans km(data, 2);
+    km.clusterize();
+    km.write_data("../dm-xp-2/dataset/myout-4");
 }
 
 int main()
 {
     //TestKahanSum();
     //TestMedian();
-    TestVector();
+    //TestVector();
+    TestKmeans();
 }

@@ -12,10 +12,12 @@
 /*************************************************************************/
 
 #include<iostream>
+#include<algorithm>
 #include<cassert>
 #include<cmath>
 #include<cfloat>
 #include<fstream>
+#include<cassert>
 #include"Vector.hpp"
 #include"KahanSum.hpp"
 #include"Median.hpp"
@@ -25,6 +27,53 @@ Vector::Vector(size_t n)
 {
     data.resize(n);
     this->n = n;
+}
+
+Vector::Vector(const Vector &v)
+{
+    data.resize(v.get_size());
+    this->n = v.get_size();
+
+    vector<double>::iterator i = data.begin();
+    vector<double>::const_iterator j = v.data.begin();
+    for ( ; i != data.end() ; i++, j++)
+    {
+        *i = *j;
+    }
+}
+
+Vector& Vector::operator = (const Vector &v)
+{
+    data.resize(v.get_size());
+    this->n = v.get_size();
+
+    vector<double>::iterator i = data.begin();
+    vector<double>::const_iterator j = v.data.begin();
+    for ( ; i != data.end() ; i++, j++)
+    {
+        *i = *j;
+    }
+}
+
+bool Vector::operator == (const Vector &v)
+{
+    if (n != v.n)
+        return false;
+
+    vector<double>::const_iterator i = data.begin();
+    vector<double>::const_iterator j = v.data.begin();
+    for (; i != data.end(); i++, j++)
+    {
+        if (*i != *j)
+            return false;
+    }
+
+    return true;
+}
+
+bool Vector::operator != (const Vector &v)
+{
+    return !(*this == v);
 }
 
 void Vector::fill(double value)
@@ -172,10 +221,15 @@ void write_data(const char *fname, list<Vector>& data)
     file.close();
 }
 
-void read_data(const char *fname, list<Vector>& data, size_t size)
+void read_data(const char *fname, list<Vector>& data)
 {
     ifstream file(fname);
     Vector *v;
+    string s;
+    getline(file, s);
+    /* number per line */
+    int size = count(s.begin(), s.end(), ' ') + 1;
+    file.seekg(0, ios::beg);
     
     while (!file.eof())
     {
