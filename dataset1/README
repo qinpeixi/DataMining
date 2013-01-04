@@ -1,0 +1,4 @@
+show-cluster.py and show-points assumes you have Python 2.7 installed.
+
+Using show-points.py => ./show-cluster.py <path to input file>
+Using show-cluster.py => ./show-cluster.py <path to output file>

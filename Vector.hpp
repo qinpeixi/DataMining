@@ -11,6 +11,7 @@ protected:
     vector<double> data;
     size_t n;
 public:
+    Vector() {}
     Vector(size_t n);
     Vector(const Vector &inVector);
     Vector& operator = (const Vector &v);
@@ -18,6 +19,7 @@ public:
     bool operator != (const Vector &v);
     void fill(double value);
     double get(int i) const;
+    void normalize();
     void set(int i, double value);
     void add(const Vector& v);
     void sub(const Vector& v);
@@ -30,6 +32,7 @@ public:
     double min() const;
     double max() const;
 
+    void set_size(size_t _n) { n = _n; data.resize(n);}
     size_t get_size() const { return n; }
 };
 

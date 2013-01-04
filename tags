@@ -1,0 +1,90 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+DaviesBouldinIndex	Kmeans.cpp	/^double Kmeans::DaviesBouldinIndex()$/;"	f	class:Kmeans
+DunnIndex	Kmeans.cpp	/^double Kmeans::DunnIndex()$/;"	f	class:Kmeans
+GetEta	LinearClassifier.hpp	/^    double GetEta() { return eta; }$/;"	f	class:LinearClassifier
+GetV	LinearClassifier.hpp	/^    Vector &GetV() { return V; }$/;"	f	class:LinearClassifier
+GetVn	LinearClassifier.hpp	/^    double GetVn() { return vn; }$/;"	f	class:LinearClassifier
+KAHANSUM_HPP	KahanSum.hpp	2;"	d
+KEMANS_HPP	Kmeans.hpp	2;"	d
+KMEAN	Kmeans.cpp	58;"	d	file:
+KahanSum	KahanSum.hpp	/^    KahanSum():sum(0.0), c(0.0) {}$/;"	f	class:KahanSum
+KahanSum	KahanSum.hpp	/^class KahanSum$/;"	c
+Kmeans	Kmeans.cpp	/^Kmeans::Kmeans(list<Vector> &p, int K)$/;"	f	class:Kmeans
+Kmeans	Kmeans.hpp	/^class Kmeans$/;"	c
+LINEAR_CLASSIFIER_HPP	LinearClassifier.hpp	2;"	d
+LinearClassifier	LinearClassifier.hpp	/^class LinearClassifier$/;"	c
+MEDIAN_HPP	Median.hpp	2;"	d
+Median	Median.hpp	/^class Median$/;"	c
+TestKahanSum	test.cpp	/^void TestKahanSum()$/;"	f
+TestKmeans	test.cpp	/^void TestKmeans(int n, int lowerbound, int upperbound)$/;"	f
+TestMedian	test.cpp	/^void TestMedian()$/;"	f
+TestVector	test.cpp	/^void TestVector()$/;"	f
+V	LinearClassifier.hpp	/^    Vector V;$/;"	m	class:LinearClassifier
+VECTOR_HPP	Vector.hpp	2;"	d
+Vector	Vector.cpp	/^Vector::Vector(const Vector &v)$/;"	f	class:Vector
+Vector	Vector.cpp	/^Vector::Vector(size_t n)$/;"	f	class:Vector
+Vector	Vector.hpp	/^class Vector$/;"	c
+VectorTest	test.cpp	/^    VectorTest(size_t n):Vector(n) {}$/;"	f	class:VectorTest
+VectorTest	test.cpp	/^class VectorTest : public Vector$/;"	c	file:
+add	KahanSum.cpp	/^void KahanSum::add(double v)$/;"	f	class:KahanSum
+add	Median.cpp	/^void Median::add(double value)$/;"	f	class:Median
+add	Vector.cpp	/^void Vector::add(const Vector& v)$/;"	f	class:Vector
+c	KahanSum.hpp	/^    double c, y, t;$/;"	m	class:KahanSum
+classify	LinearClassifier.cpp	/^bool LinearClassifier::classify(const Vector &X)$/;"	f	class:LinearClassifier
+cluster_centers	Kmeans.hpp	/^    vector<Vector> cluster_centers;$/;"	m	class:Kmeans
+clusterize	Kmeans.cpp	/^int Kmeans::clusterize()$/;"	f	class:Kmeans
+colors	dataset/show-clusters.py	/^colors = ('#FF4500', '#3CB371', '#4682B4', '#DB7093', '#FFD700')$/;"	v
+data	Median.hpp	/^    std::vector<double> data;$/;"	m	class:Median
+data	Vector.hpp	/^    vector<double> data;$/;"	m	class:Vector
+dot	Vector.cpp	/^double Vector::dot(const Vector& v) const$/;"	f	class:Vector
+eta	LinearClassifier.hpp	/^    double eta;$/;"	m	class:LinearClassifier
+fill	Vector.cpp	/^void Vector::fill(double value)$/;"	f	class:Vector
+get	Vector.cpp	/^double Vector::get(int i) const$/;"	f	class:Vector
+get_closest_center_id	Kmeans.cpp	/^int Kmeans::get_closest_center_id(const Vector &X)$/;"	f	class:Kmeans
+get_cluster_center	Kmeans.hpp	/^    Vector get_cluster_center(int i) { return cluster_centers[i]; }$/;"	f	class:Kmeans
+get_median	Median.cpp	/^double Median::get_median()$/;"	f	class:Median
+get_point_id	Kmeans.hpp	/^    int get_point_id(int i) { return point_ids[i]; }$/;"	f	class:Kmeans
+get_size	Vector.hpp	/^    size_t get_size() const { return n; }$/;"	f	class:Vector
+get_sum	KahanSum.cpp	/^double KahanSum::get_sum()$/;"	f	class:KahanSum
+inc_mul	Vector.cpp	/^void Vector::inc_mul(const Vector& v, double k)$/;"	f	class:Vector
+init_point_indexes	Kmeans.cpp	/^void Kmeans::init_point_indexes()$/;"	f	class:Kmeans
+k	Kmeans.hpp	/^    int k;$/;"	m	class:Kmeans
+main	dataset/show-clusters.py	/^def main():$/;"	f
+main	dataset/show-points.py	/^def main():$/;"	f
+main	test.cpp	/^int main(int argc, char *argv[])$/;"	f
+max	Vector.cpp	/^double Vector::max() const$/;"	f	class:Vector
+min	Vector.cpp	/^double Vector::min() const$/;"	f	class:Vector
+mul	Vector.cpp	/^void Vector::mul(double k)$/;"	f	class:Vector
+n	Vector.hpp	/^    size_t n;$/;"	m	class:Vector
+norm	Vector.cpp	/^double Vector::norm() const$/;"	f	class:Vector
+operator !=	Vector.cpp	/^bool Vector::operator != (const Vector &v)$/;"	f	class:Vector
+operator =	Vector.cpp	/^Vector& Vector::operator = (const Vector &v)$/;"	f	class:Vector
+operator =	test.cpp	/^    void operator=(Vector &vec)$/;"	f	class:VectorTest
+operator ==	Vector.cpp	/^bool Vector::operator == (const Vector &v)$/;"	f	class:Vector
+point_ids	Kmeans.hpp	/^    vector<int> point_ids;$/;"	m	class:Kmeans
+points	Kmeans.hpp	/^    const list<Vector> &points;$/;"	m	class:Kmeans
+printall	test.cpp	/^    void printall()$/;"	f	class:VectorTest
+read_data	Vector.cpp	/^void read_data(const char *fname, list<Vector>& data)$/;"	f
+reset	KahanSum.cpp	/^void KahanSum::reset()$/;"	f	class:KahanSum
+reset	Median.cpp	/^void Median::reset()$/;"	f	class:Median
+set	Vector.cpp	/^void Vector::set(int i, double value)$/;"	f	class:Vector
+set_weights	LinearClassifier.cpp	/^void LinearClassifier::set_weights(const Vector &C, const Vector &N)$/;"	f	class:LinearClassifier
+signed_dist	LinearClassifier.cpp	/^double LinearClassifier::signed_dist(const Vector &X)$/;"	f	class:LinearClassifier
+square_norm	Vector.cpp	/^double Vector::square_norm() const$/;"	f	class:Vector
+sub	Vector.cpp	/^void Vector::sub(const Vector& v)$/;"	f	class:Vector
+sum	KahanSum.hpp	/^    double sum;$/;"	m	class:KahanSum
+sum	Vector.cpp	/^double Vector::sum() const$/;"	f	class:Vector
+t	KahanSum.hpp	/^    double c, y, t;$/;"	m	class:KahanSum
+update_centers	Kmeans.cpp	/^bool Kmeans::update_centers()$/;"	f	class:Kmeans
+update_weights	LinearClassifier.cpp	/^void LinearClassifier::update_weights(const Vector &X, bool inSide)$/;"	f	class:LinearClassifier
+vector_mean	Vector.cpp	/^Vector vector_mean(list<Vector>& data)$/;"	f
+vector_median	Vector.cpp	/^Vector vector_median(list<Vector>& data)$/;"	f
+vn	LinearClassifier.hpp	/^    double vn;$/;"	m	class:LinearClassifier
+write_data	Kmeans.cpp	/^void Kmeans::write_data(const char *fname)$/;"	f	class:Kmeans
+write_data	Vector.cpp	/^void write_data(const char *fname, list<Vector>& data)$/;"	f
+y	KahanSum.hpp	/^    double c, y, t;$/;"	m	class:KahanSum

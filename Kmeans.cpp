@@ -55,19 +55,22 @@ void Kmeans::init_point_indexes()
 {
     int t;
     srand(time(0));
+#define KMEAN
+#ifdef KMEANS
     /* kmeans initialization */
-    /*for (int i=0; i<points.size(); i++)
+    for (int i=0; i<points.size(); i++)
     {
         t = rand() % k;
         point_ids.push_back(t);
     }
-    update_centers();*/
-
+    update_centers();
+#else
     /* Kmeans++ initialization */
     point_ids.resize(points.size());
-    for (int i=1; i<k; i++)
+    for (int i=0; i<k; i++)
     {
         int j = 0;
+        //vector<double> mindcx(points.size(), 1.0/points.size());
         double mindcx[points.size()];
         // for each point j, get mindcx[j], which is the distance to 
         //  the nearest cluster 
@@ -90,19 +93,25 @@ void Kmeans::init_point_indexes()
         double sum = 0;
         for (j=0; j<points.size(); j++)
             sum += mindcx[j];
-        double p[points.size()];
-        for (j=0; j<points.size(); j++)
-            p[j] = mindcx[j] / sum;
+        //double p[points.size()];
+        vector<double> p(points.size(), 1.0/points.size());
+        if (i != 0)
+            for (j=0; j<points.size(); j++)
+                p[j] = mindcx[j] / sum;
+        else
+            printf("%f, %f, %f\n", p[0], p[points.size()/2], p[points.size()-1]);
 
         // choose cluster_center[i] by probability 
         double prob = (double)rand() / RAND_MAX;
         for (j=0; prob >0; j++)
             prob -= p[j];
         list<Vector>::const_iterator index = points.begin();
+        printf("cluster's center: %d.\n", j);
         while (j != 0)
             j --, index ++;
         cluster_centers[i] = *index;
     }
+#endif
 }
 
 bool Kmeans::update_centers()

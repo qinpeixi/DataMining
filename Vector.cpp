@@ -81,6 +81,16 @@ void Vector::fill(double value)
     data.assign(data.size(), value);
 }
 
+void Vector::normalize()
+{
+    double sum = 0;
+    for (int i=0; i<n; i++)
+        sum += data[i] * data[i];
+    sum = sqrt(sum);
+    for (int i=0; i<n; i++)
+        data[i] /= sum;
+}
+
 double Vector::get(int i) const
 {
     return data[i];
