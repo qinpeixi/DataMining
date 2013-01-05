@@ -16,13 +16,13 @@
 #include<cmath>
 #include<random>
 #include"LinearClassifier.hpp"
+#define debug printf
 using namespace std;
 
-void LinearClassifier::set_weights(const Vector &C, const Vector &N)
+void LinearClassifier::set_weights(const Vector &_C, const Vector &N)
 {
     V = N;
-    vn = - V.dot(C);
-    assert(V == N);
+    vn = - V.dot(_C);
 }
 
 double LinearClassifier::signed_dist(const Vector &X) const
@@ -37,26 +37,26 @@ bool LinearClassifier::classify(const Vector &X) const
 
 void LinearClassifier::update_weights(const Vector &X, bool inSide)
 {
-    cout << "Update point:" << X.get(0) << " " << X.get(1) << endl;
+    debug("Update point: %f %f\n", X.get(0), X.get(1));
 
-    double tanh_dist = tanh(signed_dist(X));
+    double tanh_dist = tanh(signed_dist(X)/3);
     double derv_f = 1 - tanh_dist * tanh_dist;
     double e =  (2 * inSide - 1) - tanh_dist;
     //double e = inSide - tanh_dist;
     double coeff = eta * (e) * derv_f;
-    printf("%f, %f, %f\n", signed_dist(X), e, coeff);
-    Vector tmp(X);
-    tmp.mul(coeff);
-    V.add(tmp);
-    V.normalize();
+    debug("%f, %f, %f\n", signed_dist(X), e, coeff);
+    V.inc_mul(X, coeff);
+    //V.normalize();
+    //vn += coeff * X.sum() / X.get_size();
     vn += coeff;
 
-    cout << "Complete update:" << V.get(0) << " " << V.get(1) << " " << vn << endl << endl;;
+    debug("C: %f %f V: %f %f vn: %f\n\n", C.get(0), C.get(1), V.get(0), V.get(1), vn);
 }
 
 void LinearClassifier::reset(Vector &_C, size_t n, double _eta)
 {
-    Vector C(_C);
+    //Vector C(_C);
+    C = _C;
     Vector N(n);
 
     cout << C.get(0) << " " << C.get(1) << endl;;
@@ -67,11 +67,11 @@ void LinearClassifier::reset(Vector &_C, size_t n, double _eta)
 
     for (int i=0; i<n; i++)
         N.set(i, rand_data[i]);
-    N.normalize();
-    cout << "N is " << N.get(0) << " " << N.get(1) << endl;;
+    //N.normalize();
 
     set_weights(C, N);
     eta = _eta;
+    debug("C: %f %f V: %f %f vn: %f\n\n", C.get(0), C.get(1), V.get(0), V.get(1), vn);
 }
 
 void Box_Muller(double rand_data[], size_t n)

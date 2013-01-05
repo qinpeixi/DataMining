@@ -6,10 +6,11 @@
 class LinearClassifier
 {
     Vector V;
+    Vector C;
     double vn;
     double eta;
     /* set V and vn such as they represent an hyperplane of origin C and normal V */
-    void set_weights(const Vector &C, const Vector &N);
+    void set_weights(const Vector &_C, const Vector &N);
     /* return the signed distance of point X to the hyperplane (V, vn) */
     double signed_dist(const Vector &X) const;
 
