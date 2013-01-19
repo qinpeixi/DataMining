@@ -70,7 +70,7 @@ void MLP::backward(const Vector &X, double c)
 bool MLP::classify(const Vector &X)
 {
     forward(X);
-    /* z > 0 will give opposite, very strange */
+    /* z > 0 will give opposite result, very strange */
     return z < 0;
 }
 
