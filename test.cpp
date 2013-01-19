@@ -27,8 +27,9 @@
 #include"Vector.hpp"
 #include"Kmeans.hpp"
 #include"LinearClassifier.hpp"
+#include"MLP.hpp"
 using namespace std;
-
+/*
 void TestKahanSum()
 {
     KahanSum ks;
@@ -89,6 +90,9 @@ void TestVector()
 {
     const size_t size = 10;
     VectorTest a(size), b(size);
+    a.fill(1);
+    b.othogonalize(a);
+    b.printall();
 
     a.fill(1.1);
     for (int i=0; i<size; i++)
@@ -184,7 +188,7 @@ void TestKmeans(int n, int lowerbound, int upperbound)
         km.write_data("myout-3");
         printf("Cluster: %2d  DunnIndex: %f  Davies-BouldinIndex: %f\n", k, km.DunnIndex(), km.DaviesBouldinIndex());
     }
-}
+}*/
 
 void read_data(const char *fname, vector<Vector> &data, vector<bool> &label)
 {
@@ -192,7 +196,6 @@ void read_data(const char *fname, vector<Vector> &data, vector<bool> &label)
     Vector *v;
     string s;
     getline(file, s);
-    /* number per line */
     int size = count(s.begin(), s.end(), ' ');
     file.seekg(0, ios::beg);
     
@@ -212,10 +215,38 @@ void read_data(const char *fname, vector<Vector> &data, vector<bool> &label)
         file >> l;
         assert((l==0) || (l==1));
         label.push_back(l);
+        free(v);
     }
     data.pop_back();
     label.pop_back();
 
+    file.close();
+}
+
+void read_data2(const char *fname, vector<Vector> &data)
+{
+    ifstream file(fname);
+    Vector *v;
+    string s;
+    getline(file, s);
+    int size = count(s.begin(), s.end(), ' ');
+    size ++;
+    file.seekg(0, ios::beg);
+    
+    while (!file.eof())
+    {
+        v = new Vector(size);
+        for (size_t i=0; i<v->get_size(); i++)
+        {
+            double d;
+            file >> d;
+            v->set(i, d);
+        }
+        data.push_back(*v);
+
+        free(v);
+    }
+    data.pop_back();
     file.close();
 }
 
@@ -236,9 +267,10 @@ void write_data(const char *fname, vector<Vector> &data, vector<bool> &label)
     file.close();
 }
 
+/*
 void TestLinearClassifier(int n, int times, double eta)
 {
-    assert(n < 3);
+    assert(n < 4);
     /*const int nbPoints = 4;
     Vector p[nbPoints];
     double cord[nbPoints][2] = {{100, 101}, {101, 100}, {100, 100}, {101, 100}};
@@ -250,11 +282,11 @@ void TestLinearClassifier(int n, int times, double eta)
         p[i].set_size(2);
         p[i].set(0, cord[i][0]-offset);
         p[i].set(1, cord[i][1]-offset);
-    }*/
+    }*//*
     const char *infile[] = {"dataset/dataset-1",
-        "dataset/dataset-2","dataset/dataset-3"};
+        "dataset/dataset-2","dataset/dataset-3","dataset/dataset-4"};
     const char *outfile[] = {"dataset/myout-1",
-        "dataset/myout-2","dataset/myout-3"};
+        "dataset/myout-2","dataset/myout-3", "dataset/myout-4"};
 
     vector<Vector> data;
     vector<bool> label;
@@ -274,11 +306,13 @@ void TestLinearClassifier(int n, int times, double eta)
     }
     for (int i=0; i<nbPoints; i++)
         data[i].sub(mean);
-
     mean.fill(0);
+
     LinearClassifier lc;
     lc.reset(mean, data[0].get_size(), eta);
+
     srand(time(0));
+
     for (int i=0; i<times; i++)
     {
         int j = rand() % nbPoints;
@@ -295,6 +329,71 @@ void TestLinearClassifier(int n, int times, double eta)
     }
     write_data(outfile[n], data, label);
     printf("%d wrong of %d data, accuracy: %f\n", wrong, nbPoints, (double)(nbPoints - wrong)/nbPoints);
+}*/
+
+void TestMLP(int n, int k, int times, double eta)
+{
+    assert(n < 4);
+    const char *infile[] = {"dataset/dataset-1",
+        "dataset/dataset-2","dataset/dataset-3","dataset/dataset-4"};
+    const char *outfile[] = {"dataset/myout-1",
+        "dataset/myout-2","dataset/myout-3", "dataset/myout-4"};
+    double cord[4][2] = {{-1,1}, {1,-1}, {-1,-1}, {1,1}};
+    //bool label[4] = {true, true, false, false};
+
+    vector<Vector> data;
+    vector<bool> label;
+    read_data(infile[n], data, label);
+    /*data.resize(4);
+    for (int i=0; i<4; i++)
+    {
+        data[i].set_size(2);
+        data[i].set(0, cord[i][0]);
+        data[i].set(1, cord[i][1]);
+    }*/
+    const int nbPoints = data.size();
+
+    Vector mean(data[0].get_size());
+    mean.fill(0);
+    for (int i=0; i<nbPoints; i++)
+    {
+        mean.add(data[i]);
+    }
+    for (int i=0; i<data[0].get_size(); i++)
+    {
+        double m = mean.get(i) / nbPoints;
+        mean.set(i, m);
+    }
+    for (int i=0; i<nbPoints; i++)
+        data[i].sub(mean);
+    mean.fill(0);
+
+    MLP mlp(data[0].get_size(), k, eta);
+    mlp.reset();
+    //read_data2(infile[n], data);
+    //MLP mlp(data[0].get_size(), k);
+    //const int nbPoints = data.size()-1;
+
+    srand(time(0));
+
+    for (int i=0; i<times; i++)
+    {
+        int j = rand() % nbPoints;
+        //data[j].printall("\r\nX:");
+        mlp.update(data[j], label[j]);
+    }
+    mlp.print();
+
+    int wrong = 0;
+    for (int i=0; i<nbPoints; i++)
+    {
+        if (mlp.classify(data[i]) != label[i])
+            //cout << "Classify " << i << "th point wrong." << endl;
+            wrong ++;
+        label[i] = mlp.classify(data[i]); 
+    }
+    //write_data(outfile[n], data, label);
+    printf("%d wrong of %d data, accuracy: %f\n", wrong, nbPoints, (double)(nbPoints - wrong)/nbPoints);
 }
 
 int main(int argc, char *argv[])
@@ -303,9 +402,10 @@ int main(int argc, char *argv[])
     //TestMedian();
     //TestVector();
 
-    if (argc != 4)
+    if (argc != 5)
         cout << "argument is not enough" << endl;
     else
         //TestKmeans(atoi(argv[1]), atoi(argv[2]), atoi(argv[3]));
-        TestLinearClassifier(atoi(argv[1]), atoi(argv[2]), atof(argv[3]));
+        //TestLinearClassifier(atoi(argv[1])-1, atoi(argv[2]), atof(argv[3]));
+        TestMLP(atoi(argv[1])-1, atoi(argv[2]), atoi(argv[3]), atof(argv[4]));
 }

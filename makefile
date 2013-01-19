@@ -1,7 +1,7 @@
-test: test.o KahanSum.o Median.o Vector.o Kmeans.o LinearClassifier.o
+test: test.o Vector.o KahanSum.o Median.o MLP.o
 	g++ -o $@ $^ -std=c++0x
 .cpp.o:
-	g++ -c -O2 $< -std=c++0x
+	g++ -c -g $< -std=c++0x
 clean:
 	rm *.o
 	rm test

@@ -20,6 +20,7 @@ public:
     void fill(double value);
     double get(int i) const;
     void normalize();
+    Vector& othogonalize(const Vector& v);
     void set(int i, double value);
     void add(const Vector& v);
     void sub(const Vector& v);
@@ -34,11 +35,13 @@ public:
 
     void set_size(size_t _n) { n = _n; data.resize(n);}
     size_t get_size() const { return n; }
+    void printall(const char *title) const;
 };
 
 void write_data(const char *fname, list<Vector>& data);
 void read_data(const char *fname, list<Vector>& data);
 Vector vector_mean(list<Vector>& data);
 Vector vector_median(list<Vector>& data);
+void Box_Muller(double rand_data[], size_t n);
 
 #endif

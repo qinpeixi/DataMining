@@ -91,6 +91,18 @@ void Vector::normalize()
         data[i] /= sum;
 }
 
+Vector& Vector::othogonalize(const Vector& v)
+{
+    double sum = 0;
+    for (int i=0; i<n-1; i++)
+    {
+        data[i] = v.data[i];
+        sum += data[i] * v.data[i];
+    }
+    data[n-1] = - sum / v.data[n-1];
+    return *this;
+}
+
 double Vector::get(int i) const
 {
     return data[i];
@@ -213,6 +225,14 @@ double Vector::max() const
     return max;
 }
 
+void Vector::printall(const char *title) const
+{
+    cout << title << ": ";
+    for (size_t i=0; i<n; i++)
+        cout << data[i] << " ";
+    cout << endl;
+}
+
 // one point per vector
 void write_data(const char *fname, list<Vector>& data)
 {
@@ -295,4 +315,16 @@ Vector vector_median(list<Vector>& data)
     }
 
     return v;
+}
+
+void Box_Muller(double rand_data[], size_t n)
+{
+    static std::random_device rd;
+    static default_random_engine generator(rd());
+    static normal_distribution<double> distribution(0, 1);
+
+    for (int i=0; i<n; i++)
+    {
+        rand_data[i] = distribution(generator);
+    }
 }
